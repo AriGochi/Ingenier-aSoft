@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysqldb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Root.1234
+      MYSQL_USER: chillsong
+      MYSQL_PASSWORD: Allthread1.
+      MYSQL_DATABASE: television
+    ports:
+      - "3306:3306"
+
+  television-api:
+    build: ./televisionapi
+    container_name: television-api
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/television
+      SPRING_DATASOURCE_USERNAME: chillsong
+      SPRING_DATASOURCE_PASSWORD: Allthread1.
+    ports:
+      - "8081:8080"
+
